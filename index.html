@@ -3,12 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fucka Valentine’s Day | $FVDAY on Solana</title>
-  <meta name="description" content="Fucka Valentine’s Day ($FVDAY) — an anti-Hallmark Solana memecoin. Love is temporary. Chaos is forever." />
+  <title>Fucka Valentine’s Day | $FVDAY</title>
+  <meta name="description" content="$FVDAY is the anti-Valentine Solana memecoin. Love is a scam. Chaos is honest." />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Fucka Valentine’s Day | $FVDAY" />
-  <meta property="og:description" content="Anti-Hallmark. Pro-chaos. Solana memecoin powered by community." />
+  <meta property="og:description" content="Anti-Hallmark. Pro-chaos. Chronically online. On Solana." />
   <meta property="og:type" content="website" />
 
   <link rel="preconnect" href="https://api.dexscreener.com" crossorigin>
@@ -20,31 +19,42 @@
 
   <nav class="nav">
     <div class="brand">
-      <div class="logo" aria-hidden="true">💔</div>
+      <button class="logo" id="logoBtn" type="button" aria-label="Logo">💔</button>
       <div>
         <div class="brandTitle">Fucka Valentine’s Day</div>
-        <div class="brandSub">$FVDAY • Solana</div>
+        <div class="brandSub">$FVDAY • Solana • “Love is a scam.”</div>
       </div>
     </div>
 
     <div class="navActions">
-      <button class="btn ghost" id="memeModeBtn" type="button" title="Meme Mode">😈 Meme Mode</button>
+      <button class="btn ghost" id="memeModeBtn" type="button">😈 Savage Mode</button>
       <a class="btn" href="#buy">Buy</a>
     </div>
   </nav>
 
   <header class="hero">
     <div class="heroInner">
-      <div class="pill">Anti-Hallmark • Pro-chaos • Community token</div>
-      <h1>Love is temporary.<br><span class="grad">Chaos is forever.</span></h1>
+      <div class="pill">🚫 Hallmark • 💔 Broken hearts • 🧨 Meme velocity • ⚡ Solana</div>
+
+      <h1>
+        Valentine’s Day is a lie.<br>
+        <span class="grad">$FVDAY tells the truth.</span>
+      </h1>
+
       <p class="lede">
-        $FVDAY is a Solana memecoin for the romantically exhausted, the proudly single,
-        and anyone who’s done pretending February 14th is mandatory.
+        Roses are overpriced. Texting your ex is a war crime.
+        <strong>$FVDAY</strong> is a Solana memecoin for the romantically exhausted,
+        the proudly single, and anyone done pretending February 14th is mandatory.
       </p>
+
+      <div class="snark">
+        Not financial advice. Not relationship advice. Definitely not therapy.
+      </div>
 
       <div class="ctaRow">
         <a class="btn big" href="#buy">Buy $FVDAY</a>
         <a class="btn big ghost" href="#stats">Live Stats</a>
+        <a class="btn big ghost" href="#memes">Meme Wall</a>
       </div>
 
       <div class="contractCard" id="contract">
@@ -56,12 +66,12 @@
           <button class="btn small" id="copyMintBtn" type="button">Copy</button>
         </div>
         <div class="contractHint">
-          Always verify the contract address before swapping.
+          Verify the mint. Don’t get farmed by a copycat. That’s not “fate,” it’s you being lazy.
         </div>
       </div>
 
       <div class="tickerTape" aria-hidden="true">
-        <div class="tape" id="tape">
+        <div class="tape">
           💔 FVDAY • 🚫 Hallmark • 🧨 Chaos • 🖤 Community • ⚡ Solana •
           💔 FVDAY • 🚫 Hallmark • 🧨 Chaos • 🖤 Community • ⚡ Solana •
         </div>
@@ -73,8 +83,11 @@
     <!-- Countdown takeover -->
     <section class="section takeover" id="countdown">
       <div class="sectionHeader">
-        <h2>Valentine’s Day Takeover</h2>
-        <p>Countdown to Feb 14 (your local time). When it hits: we flip the vibe.</p>
+        <h2>Feb 14 Takeover</h2>
+        <p>
+          Countdown to Valentine’s Day (local time). When it hits, the site flips into full degeneracy.
+          (Click the 💔 seven times if you can’t wait.)
+        </p>
       </div>
 
       <div class="countGrid">
@@ -85,7 +98,7 @@
       </div>
 
       <div class="takeoverNote" id="takeoverNote">
-        Tip: Click the 💔 logo 7 times for a surprise.
+        Pro tip: if you’re reading this, it’s already too late.
       </div>
     </section>
 
@@ -93,7 +106,7 @@
     <section class="section" id="stats">
       <div class="sectionHeader">
         <h2>Live Stats</h2>
-        <p>Auto-pulled from Dexscreener. If unavailable, the site falls back gracefully.</p>
+        <p>Auto-pulled via Dexscreener API. If it’s too new, stats may show as unavailable.</p>
       </div>
 
       <div class="statsGrid">
@@ -102,7 +115,7 @@
           <div class="value" id="price">$—</div>
         </div>
         <div class="stat">
-          <div class="label">Market Cap</div>
+          <div class="label">Market Cap (FDV proxy)</div>
           <div class="value" id="mcap">$—</div>
         </div>
         <div class="stat">
@@ -123,38 +136,56 @@
       <div class="smallNote" id="statsNote"></div>
     </section>
 
-    <!-- About -->
-    <section class="section dark" id="about">
+    <!-- Meme wall (use your real images here) -->
+    <section class="section dark" id="memes">
       <div class="sectionHeader">
-        <h2>What is $FVDAY?</h2>
+        <h2>Meme Wall</h2>
         <p>
-          A Solana memecoin built around a simple truth:
-          forced romance is cringe, corporate holidays are louder than feelings,
-          and the internet deserves a token with boundaries.
+          This is where you drop the project’s existing visuals. Upload them to <code>/images</code> in your repo.
+          The site will display whatever you list in <code>app.js</code>.
+        </p>
+      </div>
+
+      <div class="memeGrid" id="memeGrid">
+        <!-- Filled by app.js -->
+      </div>
+
+      <div class="smallNote">
+        Founder pitch angle: a consistent meme pack + clean landing page = instant credibility + faster onboarding.
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <div class="sectionHeader">
+        <h2>What the hell is $FVDAY?</h2>
+        <p>
+          A Solana memecoin built for people who are tired of forced romance, fake holidays,
+          and performative “love” marketed by corporations. It’s not deep. It’s honest.
         </p>
       </div>
 
       <div class="featureGrid">
         <div class="feature">
-          <h3>💔 Anti-Hallmark</h3>
-          <p>Reject manufactured emotions. Embrace chaos with taste.</p>
+          <h3>💔 Anti-Valentine Energy</h3>
+          <p>Because “mandatory feelings” are cringe.</p>
+        </div>
+        <div class="feature">
+          <h3>🧨 Meme Warfare</h3>
+          <p>Culture is the product. The community writes the lore.</p>
         </div>
         <div class="feature">
           <h3>⚡ Solana Speed</h3>
-          <p>Fast swaps, low fees, maximum meme velocity.</p>
-        </div>
-        <div class="feature">
-          <h3>🖤 Community First</h3>
-          <p>Culture is the product. The community writes the lore.</p>
+          <p>Fast swaps, low fees, maximum impulse.</p>
         </div>
       </div>
     </section>
 
     <!-- Tokenomics -->
-    <section class="section" id="tokenomics">
+    <section class="section dark" id="tokenomics">
       <div class="sectionHeader">
-        <h2>Tokenomics</h2>
-        <p>Simple. Clean. Meme-compatible.</p>
+        <h2>Tokenomics (Relax)</h2>
+        <p>We didn’t reinvent math. We just weaponized the vibe.</p>
       </div>
 
       <div class="tokGrid">
@@ -171,43 +202,43 @@
           <div class="value">1,000,000,000</div>
         </div>
         <div class="tokCard">
-          <div class="label">Vibe</div>
-          <div class="value">Unapologetic</div>
+          <div class="label">Utility</div>
+          <div class="value">Vibes & bad decisions</div>
         </div>
       </div>
 
       <div class="legal">
-        This website is for community info only and not financial advice. Meme responsibly.
+        This website is for community info only and not financial advice. If you bought because of a meme, that’s on you (respectfully).
       </div>
     </section>
 
     <!-- Roadmap -->
-    <section class="section dark" id="roadmap">
+    <section class="section" id="roadmap">
       <div class="sectionHeader">
-        <h2>Roadmap</h2>
-        <p>We keep it real. We ship what the community wants.</p>
+        <h2>Roadmap (Brutal Honesty Edition)</h2>
+        <p>Promises are for engagement rings. Here’s the actual plan.</p>
       </div>
 
       <ol class="road">
-        <li><span class="dot"></span><div><strong>Launch & Liquidity</strong><div class="muted">Establish the pool. Start the lore.</div></div></li>
-        <li><span class="dot"></span><div><strong>Community Growth</strong><div class="muted">Raid nights. Meme packs. Partnerships.</div></div></li>
-        <li><span class="dot"></span><div><strong>Listings & Tracking</strong><div class="muted">Dex trackers, socials, visibility.</div></div></li>
-        <li><span class="dot"></span><div><strong>Feb 14 Takeover</strong><div class="muted">Countdown events, campaigns, chaos.</div></div></li>
-        <li><span class="dot"></span><div><strong>Utility (Community-Decided)</strong><div class="muted">Merch, gated content, games, etc.</div></div></li>
+        <li><span class="dot"></span><div><strong>Launch the damn thing</strong><div class="muted">Liquidity, memes, and chaos.</div></div></li>
+        <li><span class="dot"></span><div><strong>Panic, then cope</strong><div class="muted">Price moves. People post. Nature heals.</div></div></li>
+        <li><span class="dot"></span><div><strong>Get tracked everywhere</strong><div class="muted">Dex pages, dashboards, “where to buy,” visibility.</div></div></li>
+        <li><span class="dot"></span><div><strong>Feb 14 internet takeover</strong><div class="muted">Raid packs, meme drops, and cultural vandalism.</div></div></li>
+        <li><span class="dot"></span><div><strong>Utility if the community demands it</strong><div class="muted">Merch, games, gated content, whatever wins.</div></div></li>
       </ol>
     </section>
 
     <!-- How to buy -->
-    <section class="section" id="buy">
+    <section class="section dark" id="buy">
       <div class="sectionHeader">
         <h2>How to Buy</h2>
-        <p>Fast path, no fluff.</p>
+        <p>Fast path. No hand-holding.</p>
       </div>
 
       <div class="steps">
-        <div class="step"><div class="stepNum">1</div><div><strong>Install Phantom</strong><div class="muted">Create a wallet and back up your seed phrase.</div></div></div>
-        <div class="step"><div class="stepNum">2</div><div><strong>Fund with SOL</strong><div class="muted">Send SOL to your Phantom wallet.</div></div></div>
-        <div class="step"><div class="stepNum">3</div><div><strong>Swap for $FVDAY</strong><div class="muted">Paste the mint address and verify carefully.</div></div></div>
+        <div class="step"><div class="stepNum">1</div><div><strong>Install Phantom</strong><div class="muted">Back up your seed phrase. If you lose it, that’s a you problem.</div></div></div>
+        <div class="step"><div class="stepNum">2</div><div><strong>Fund with SOL</strong><div class="muted">Send SOL to your wallet.</div></div></div>
+        <div class="step"><div class="stepNum">3</div><div><strong>Swap for $FVDAY</strong><div class="muted">Paste the mint. Triple-check. Then accept your destiny.</div></div></div>
       </div>
 
       <div class="ctaRow">
@@ -217,27 +248,27 @@
     </section>
 
     <!-- Community -->
-    <section class="section dark" id="community">
+    <section class="section" id="community">
       <div class="sectionHeader">
-        <h2>Community</h2>
-        <p>Put the links here (X / Telegram / Discord). I left placeholders for the founder.</p>
+        <h2>Community Links</h2>
+        <p>Paste official links into <code>app.js</code> so they’re always correct.</p>
       </div>
 
       <div class="linksRow">
-        <a class="btn ghost" href="#" onclick="alert('Add X link here'); return false;">X (Twitter)</a>
-        <a class="btn ghost" href="#" onclick="alert('Add Telegram link here'); return false;">Telegram</a>
-        <a class="btn ghost" href="#" onclick="alert('Add Discord link here'); return false;">Discord</a>
+        <a class="btn ghost" id="xLink" href="#" target="_blank" rel="noreferrer">X (Twitter)</a>
+        <a class="btn ghost" id="tgLink" href="#" target="_blank" rel="noreferrer">Telegram</a>
+        <a class="btn ghost" id="webLink" href="#" target="_blank" rel="noreferrer">Website</a>
       </div>
 
       <div class="smallNote">
-        Founder tip: the fastest credibility upgrade is a clean website + consistent socials + pinned contract.
+        If the founder wants it “more savage,” you can crank the copy further. If they want listings, keep it edgy but host-safe.
       </div>
     </section>
   </main>
 
   <footer class="footer">
     <div>© 2026 Fucka Valentine’s Day • $FVDAY</div>
-    <div class="muted">This is a meme token. No promises. Just vibes.</div>
+    <div class="muted">Meme token. No promises. Just vibes.</div>
   </footer>
 
   <script src="app.js"></script>
