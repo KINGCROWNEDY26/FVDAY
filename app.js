@@ -1,21 +1,26 @@
 // ====== Config ======
-const MINT = "bsDjPRbrKg1rtL4gVVTzkzo1JFh5zAhh7j3XJNzpump"; // from your screenshot
+const MINT = "bsDjPRbrKg1rtL4gVVTzkzo1JFh5zAhh7j3XJNzpump";
 const PHANTOM_URL = `https://phantom.com/tokens/solana/${MINT}`;
-
-// Dexscreener token endpoint (Solana tokens supported)
 const DEX_API = `https://api.dexscreener.com/latest/dex/tokens/${MINT}`;
 
-// ====== Helpers ======
-const $ = (id) => document.getElementById(id);
+// Paste official links here once the founder confirms them:
+const OFFICIAL = {
+  x: "https://x.com/",        // <-- replace
+  telegram: "https://t.me/",  // <-- replace
+  website: "https://",        // <-- replace
+};
 
-function fmtUSD(num) {
-  if (num === null || num === undefined || Number.isNaN(Number(num))) return "—";
-  const n = Number(num);
-  if (n >= 1e9) return `$${(n/1e9).toFixed(2)}B`;
-  if (n >= 1e6) return `$${(n/1e6).toFixed(2)}M`;
-  if (n >= 1e3) return `$${(n/1e3).toFixed(2)}K`;
-  return `$${n.toFixed(6)}`;
-}
+// Add your existing “project-associated” images here after uploading to /images in your repo.
+// Tip: keep filenames simple: meme-1.jpg, meme-2.png, etc.
+const MEMES = [
+  { src: "images/meme-1.jpg", caption: "Hallmark propaganda detected. Deploy counter-memes." },
+  { src: "images/meme-2.jpg", caption: "Roses are overpriced. SOL is forever (maybe)." },
+  { src: "images/meme-3.jpg", caption: "Text your ex? No. Buy $FVDAY? Also not advice." },
+  // Add more:
+  // { src: "images/meme-4.png", caption: "Your caption here." },
+];
+
+const $ = (id) => document.getElementById(id);
 
 function fmtMoney(num) {
   if (num === null || num === undefined || Number.isNaN(Number(num))) return "—";
@@ -38,7 +43,6 @@ async function copyText(text) {
     await navigator.clipboard.writeText(text);
     return true;
   } catch (e) {
-    // fallback
     const ta = document.createElement("textarea");
     ta.value = text;
     document.body.appendChild(ta);
@@ -49,9 +53,38 @@ async function copyText(text) {
   }
 }
 
+// ====== Render Meme Wall ======
+function renderMemes() {
+  const grid = $("memeGrid");
+  if (!grid) return;
+
+  // If user didn't upload memes yet, show a friendly warning
+  if (!MEMES.length) {
+    grid.innerHTML = `<div class="smallNote">No memes added yet. Upload files to /images and list them in app.js.</div>`;
+    return;
+  }
+
+  grid.innerHTML = MEMES.map(m => `
+    <div class="memeCard">
+      <img src="${m.src}" alt="FVDAY meme" onerror="this.style.display='none'">
+      <div class="memeCap">${m.caption || ""}</div>
+    </div>
+  `).join("");
+}
+
 // ====== Live Stats ======
 async function loadDexStats() {
   $("phantomLink").href = PHANTOM_URL;
+
+  // Community links (safe placeholders until you replace them)
+  if (OFFICIAL.x && OFFICIAL.x !== "https://x.com/") $("xLink").href = OFFICIAL.x;
+  else $("xLink").href = "https://x.com/search?q=FVDAY%20solana";
+
+  if (OFFICIAL.telegram && OFFICIAL.telegram !== "https://t.me/") $("tgLink").href = OFFICIAL.telegram;
+  else $("tgLink").href = "https://t.me/";
+
+  if (OFFICIAL.website && OFFICIAL.website !== "https://") $("webLink").href = OFFICIAL.website;
+  else $("webLink").href = "#";
 
   try {
     const res = await fetch(DEX_API, { cache: "no-store" });
@@ -61,32 +94,33 @@ async function loadDexStats() {
     const pairs = data?.pairs || [];
     if (!pairs.length) throw new Error("No Dex pairs found (yet).");
 
-    // Choose the most liquid pair
+    // pick most liquid pair
     pairs.sort((a, b) => (b?.liquidity?.usd || 0) - (a?.liquidity?.usd || 0));
     const p = pairs[0];
 
     const priceUsd = p?.priceUsd ? Number(p.priceUsd) : null;
-    const mcap = p?.fdv ? Number(p.fdv) : null; // Dex uses FDV; for memecoins often treated as mcap proxy
+    const fdv = p?.fdv ? Number(p.fdv) : null;
     const vol24 = p?.volume?.h24 ? Number(p.volume.h24) : null;
     const chg24 = p?.priceChange?.h24 ? Number(p.priceChange.h24) : null;
 
-    $("price").textContent = priceUsd ? `$${priceUsd.toFixed(priceUsd < 0.01 ? 8 : 6)}` : "—";
-    $("mcap").textContent = fmtMoney(mcap);
+    $("price").textContent = priceUsd
+      ? `$${priceUsd.toFixed(priceUsd < 0.01 ? 8 : 6)}`
+      : "—";
+    $("mcap").textContent = fmtMoney(fdv);
     $("vol24").textContent = fmtMoney(vol24);
     $("chg24").textContent = fmtPct(chg24);
 
-    // green/red hint (no custom colors demanded; using built-in variable)
     $("chg24").style.color = (chg24 !== null && chg24 >= 0) ? "var(--ok)" : "var(--hot)";
 
     const url = p?.url || null;
     $("dexLink").href = url || "#";
 
     $("statsNote").textContent =
-      `Pair: ${p?.baseToken?.symbol || "FVDAY"}/${p?.quoteToken?.symbol || "?"} • DEX: ${p?.dexId || "—"} • Liquidity: ${fmtMoney(p?.liquidity?.usd)}`;
+      `DEX: ${p?.dexId || "—"} • Pair: ${p?.baseToken?.symbol || "FVDAY"}/${p?.quoteToken?.symbol || "?"} • Liquidity: ${fmtMoney(p?.liquidity?.usd)}`;
 
   } catch (err) {
     $("statsNote").textContent =
-      "Live stats unavailable right now (common for very new tokens). The site still works — add Dexscreener link when ready.";
+      "Live stats unavailable right now (common for brand-new tokens). Add a Dexscreener link when the pair is indexed.";
     $("dexLink").href = "#";
   }
 }
@@ -116,31 +150,28 @@ function tickCountdown() {
   $("m").textContent = String(mins).padStart(2, "0");
   $("s").textContent = String(secs).padStart(2, "0");
 
-  // Takeover when Feb 14 hits (diff <= 0)
   if (diff <= 0) {
     document.body.classList.add("meme");
     $("takeoverNote").textContent = "It’s Feb 14. Flip the script. 💔😈";
   }
 }
 
-// ====== Meme mode + Easter eggs ======
+// ====== Savage Mode + Easter Egg ======
 let logoClicks = 0;
-function initEasterEggs() {
-  const logo = document.querySelector(".logo");
-  logo.addEventListener("click", () => {
+function initSavageMode() {
+  $("memeModeBtn").addEventListener("click", () => {
+    document.body.classList.toggle("meme");
+  });
+
+  $("logoBtn").addEventListener("click", () => {
     logoClicks++;
     if (logoClicks >= 7) {
       document.body.classList.toggle("meme");
       logoClicks = 0;
-      const note = $("takeoverNote");
-      note.textContent = document.body.classList.contains("meme")
-        ? "Meme Mode unlocked. The internet is healing. 🧨"
-        : "Meme Mode disabled. Back to business. 🖤";
+      $("takeoverNote").textContent = document.body.classList.contains("meme")
+        ? "Savage Mode forced. You asked for this. 🧨"
+        : "Savage Mode off. Back to pretending we’re normal. 🖤";
     }
-  });
-
-  $("memeModeBtn").addEventListener("click", () => {
-    document.body.classList.toggle("meme");
   });
 }
 
@@ -162,11 +193,11 @@ function initCopy() {
 }
 
 // ====== Boot ======
+renderMemes();
 loadDexStats();
-initEasterEggs();
+initSavageMode();
 initCopy();
 tickCountdown();
-setInterval(tickCountdown, 1000);
 
-// refresh live stats every 60s
+setInterval(tickCountdown, 1000);
 setInterval(loadDexStats, 60000);
